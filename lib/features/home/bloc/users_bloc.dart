@@ -1,22 +1,15 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_test_bloc/features/home/bloc/users_bloc_event.dart';
 import 'package:flutter_test_bloc/features/home/bloc/users_bloc_state.dart';
 import 'package:flutter_test_bloc/features/home/repository/users_repository.dart';
 
-class UsersBloc extends Bloc<UsersBlocEvent, UsersBlocState> {
+class UsersBloc extends Cubit<UsersBlocState> {
   final UsersRepository usersRepository;
 
   UsersBloc({required this.usersRepository}) : super(UsersBlocStateLoading()) {
-    on<UsersBlocEventFetch>(_onFetch);
-    on<UsersBlocEventRefresh>(_onRefresh);
-
-    add(UsersBlocEventFetch());
+    onFetch();
   }
 
-  Future<void> _onFetch(
-    UsersBlocEventFetch event,
-    Emitter<UsersBlocState> emit,
-  ) async {
+  Future<void> onFetch() async {
     final usersRes = await usersRepository.fetchUsers();
     if (usersRes.$2 == null) {
       emit(UsersBlocStateLoaded(usersRes.$1!));
@@ -25,12 +18,9 @@ class UsersBloc extends Bloc<UsersBlocEvent, UsersBlocState> {
     }
   }
 
-  Future<void> _onRefresh(
-    UsersBlocEventRefresh event,
-    Emitter<UsersBlocState> emit,
-  ) async {
+  Future<void> onRefresh() async {
     emit(UsersBlocStateLoading());
 
-    add(UsersBlocEventFetch());
+    onFetch();
   }
 }

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test_bloc/core/di/di.dart';
-import 'package:flutter_test_bloc/features/auth/bloc/auth_bloc.dart';
-import 'package:flutter_test_bloc/features/auth/bloc/auth_bloc_state.dart';
+import 'package:flutter_test_bloc/features/auth/cubit/auth_cubit.dart';
+import 'package:flutter_test_bloc/features/auth/cubit/auth_cubit_state.dart';
 import 'package:flutter_test_bloc/features/auth/repository/auth_repository.dart';
 import 'package:flutter_test_bloc/features/auth/ui/widgets/login_form.dart';
 import 'package:flutter_test_bloc/core/widgets/my_circular_progress_widget.dart';
@@ -15,10 +15,10 @@ class AuthPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text('Авторизация')),
-      body: BlocProvider<AuthBloc>(
-        create: (_) => AuthBloc(authRepository: di.get<AuthRepository>()),
+      body: BlocProvider<AuthCubit>(
+        create: (_) => AuthCubit(authRepository: di.get<AuthRepository>()),
 
-        child: BlocConsumer<AuthBloc, AuthBlocState>(
+        child: BlocConsumer<AuthCubit, AuthBlocState>(
           listener: (context, state) {
             if (state is AuthBlocStateSuccess) {
               Navigator.pushReplacement(

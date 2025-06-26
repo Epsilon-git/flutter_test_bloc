@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_test_bloc/features/auth/bloc/auth_bloc.dart';
-import 'package:flutter_test_bloc/features/auth/bloc/auth_bloc_event.dart';
+import 'package:flutter_test_bloc/features/auth/cubit/auth_cubit.dart';
 
 class LoginForm extends StatefulWidget {
   const LoginForm({super.key, this.message = ''});
@@ -17,11 +16,9 @@ class _LoginFormState extends State<LoginForm> {
   final _passwordController = TextEditingController();
 
   void _onLoginPressed(BuildContext context) {
-    context.read<AuthBloc>().add(
-      AuthBlocEventLoginRequested(
-        _emailController.text.trim(),
-        _passwordController.text.trim(),
-      ),
+    context.read<AuthCubit>().login(
+      email: _emailController.text.trim(),
+      password: _passwordController.text.trim(),
     );
   }
 

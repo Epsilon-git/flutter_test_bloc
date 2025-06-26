@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test_bloc/core/di/di.dart';
 import 'package:flutter_test_bloc/core/widgets/my_circular_progress_widget.dart';
 import 'package:flutter_test_bloc/features/home/bloc/users_bloc.dart';
-import 'package:flutter_test_bloc/features/home/bloc/users_bloc_event.dart';
 import 'package:flutter_test_bloc/features/home/bloc/users_bloc_state.dart';
 import 'package:flutter_test_bloc/features/home/model/user.dart';
 import 'package:flutter_test_bloc/features/home/repository/users_repository.dart';
@@ -40,8 +39,7 @@ class _UsersList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return RefreshIndicator(
-      onRefresh:
-          () async => context.read<UsersBloc>().add(UsersBlocEventRefresh()),
+      onRefresh: () async => context.read<UsersBloc>().onRefresh(),
       child: ListView.builder(
         itemBuilder: (_, index) => UserInfoRow(user: users[index]),
         itemCount: users.length,
