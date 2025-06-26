@@ -1,12 +1,12 @@
-sealed class AuthBlocState {}
+sealed class AuthCubitState {}
 
-class AuthBlocStateInitial extends AuthBlocState {}
+class AuthCubitStateInitial extends AuthCubitState {}
 
-class AuthBlocStateLoading extends AuthBlocState {}
+class AuthCubitStateLoading extends AuthCubitState {}
 
-class AuthBlocStateSuccess extends AuthBlocState {}
+class AuthCubitStateSuccess extends AuthCubitState {}
 
-class AuthBlocStateFailure extends AuthBlocState {
+class AuthCubitStateFailure extends AuthCubitState {
   final String message;
-  AuthBlocStateFailure(this.message);
+  AuthCubitStateFailure(this.message);
 }

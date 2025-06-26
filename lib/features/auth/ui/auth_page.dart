@@ -18,9 +18,9 @@ class AuthPage extends StatelessWidget {
       body: BlocProvider<AuthCubit>(
         create: (_) => AuthCubit(authRepository: di.get<AuthRepository>()),
 
-        child: BlocConsumer<AuthCubit, AuthBlocState>(
+        child: BlocConsumer<AuthCubit, AuthCubitState>(
           listener: (context, state) {
-            if (state is AuthBlocStateSuccess) {
+            if (state is AuthCubitStateSuccess) {
               Navigator.pushReplacement(
                 context,
                 MaterialPageRoute(builder: (_) => const HomePage()),
@@ -30,10 +30,10 @@ class AuthPage extends StatelessWidget {
 
           builder: (context, state) {
             return switch (state) {
-              AuthBlocStateInitial _ => LoginForm(),
-              AuthBlocStateFailure state => LoginForm(message: state.message),
-              AuthBlocStateLoading _ => MyCircularProgressWidget(),
-              AuthBlocStateSuccess _ => const Center(
+              AuthCubitStateInitial _ => LoginForm(),
+              AuthCubitStateFailure state => LoginForm(message: state.message),
+              AuthCubitStateLoading _ => MyCircularProgressWidget(),
+              AuthCubitStateSuccess _ => const Center(
                 child: Text('Успешный вход!'),
               ),
             };
